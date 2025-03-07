@@ -1,0 +1,221 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --error-color: #e74c3c;
+    --light-gray: #f5f6fa;
+    --border-radius: 6px;
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --highlight-color: #ff5722; /* New highlight color */
+    --soft-bg: #ecf0f1; /* New soft background color */
+    --dark-border: #bdc3c7; /* New dark border color */
+    --active-border: #2980b9; /* Border color when active */
+}
+
+/* Base styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--primary-color);
+    background-color: var(--light-blue);
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    color: blue;
+    margin-bottom: 50px;
+}
+
+/* Form styles */
+.form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 30px;
+    border: 1px solid var(--dark-border); /* Added border */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    color: var(--primary-color);
+    background-color: #fff;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--active-border);
+    box-shadow: 0 0 8px rgba(41, 128, 185, 0.4); /* Added box-shadow on focus */
+    outline: none;
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* New box model example */
+.box-example {
+    background-color: var(--soft-bg);
+    border: 2px solid var(--secondary-color); /* New border */
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: var(--box-shadow);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.box-example:hover {
+    background-color: #e0e5e8; /* Lighter background color on hover */
+    transform: translateY(-5px); /* Lift effect */
+}
+
+/* Meeting specific styles */
+#transcriptForm {
+    margin-top: 30px;
+    border-top: 2px solid var(--light-gray);
+    padding-top: 30px;
+}
+
+.agenda-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+    border-left: 4px solid var(--secondary-color);
+    border: 1px solid var(--dark-border); /* Added border */
+}
+
+.time-slot {
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.section-header {
+    font-size: 1.2em;
+    color: var(--primary-color);
+    margin: 20px 0 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+/* Results styles */
+.results-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--dark-border); /* Added border */
+}
+
+#results {
+    background-color: var(--light-gray);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin: 20px 0;
+    white-space: pre-wrap;
+    line-height: 1.8;
+    color: var(--primary-color);
+}
+
+/* Button styles */
+button {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s ease;
+    box-shadow: var(--box-shadow);
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+button:active {
+    background-color: #1d6a8b;
+    transform: translateY(0);
+}
+
+/* Loading spinner */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--light-gray);
+    border-top: 4px solid var(--secondary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .form-container {
+        padding: 20px;
+    }
+    
+    button {
+        width: 100%;
+    }
+
+    .section-header {
+        font-size: 1.1em;
+    }
+
+    .agenda-section {
+        padding: 15px;
+    }
+
+    .box-example {
+        padding: 15px;
+        margin: 10px 0;
+    }
+}

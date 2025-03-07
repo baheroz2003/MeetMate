@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Meeting Assistant</h1>
+            <p>Generate meeting agendas and summarize meeting transcripts</p>
+        </header>
+        </header>
+        <div class="form-container">
+            <!-- Meeting Agenda Generation Form -->
+            <form id="meetingForm">
+                <div class="form-group">
+                    <label for="meeting_type">Meeting Type:</label>
+                    <select id="meeting_type" name="meeting_type" required>
+                        <option value="Team Sync">Team Sync</option>
+                        <option value="Project Review">Project Review</option>
+                        <option value="Client Meeting">Client Meeting</option>
+                        <option value="Sprint Planning">Sprint Planning</option>
+                        <option value="Product Demo">Product Demo</option>
+                        <option value="Strategy Session">Strategy Session</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Meeting Description:</label>
+                    <textarea id="description" name="description" required 
+                             placeholder="Describe the meeting purpose and context..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="duration">Duration:</label>
+                    <select id="duration" name="duration">
+                        <option value="30min">30 minutes</option>
+                        <option value="60min">1 hour</option>
+                        <option value="90min">1.5 hours</option>
+                        <option value="120min">2 hours</option>
+                    </select>
+                </div>
+
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="generate_actions" name="generate_actions" checked>
+                    <label for="generate_actions">Include Action Items</label>
+                </div>
+
+                <div class="form-group">
+                    <label for="model">AI Model:</label>
+                    <select id="model" name="model">
+                        <option value="gemma2:2b" selected>gemma2:2b</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="generateBtn">Generate Agenda</button>
+            </form>
+
+            
+        </div>
+
+        <div class="results-container" id="resultsContainer" style="display: none;">
+            <h2>Generated Content</h2>
+            <div id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Processing...</p>
+            </div>
+            <div id="results">
+                <!-- Results will appear here -->
+            </div>
+            <button id="copyBtn">Copy to Clipboard</button>
+        </div>
+    </div>
+
+    <script>
+        // Fetch available models
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/models');
+                const data = await response.json();
+                const modelSelect = document.getElementById('model');
+                modelSelect.innerHTML = '';
+                data.models.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model;
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching models:', error);
+            }
+        });
+
+        // Handle meeting agenda generation
+        document.getElementById('meetingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await handleFormSubmission(e.target, '/generate');
+        });
+
+        // Handle transcript analysis
+        document.getElementById('transcriptForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await handleFormSubmission(e.target, '/summarize');
+        });
+
+        async function handleFormSubmission(form, endpoint) {
+            const formData = new FormData(form);
+            const resultsContainer = document.getElementById('resultsContainer');
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            
+            resultsContainer.style.display = 'block';
+            loading.style.display = 'block';
+            results.innerHTML = '';
+            
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                results.innerHTML = formatResponse(data.response);
+            } catch (error) {
+                results.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Copy functionality
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            const results = document.getElementById('results').innerText;
+            navigator.clipboard.writeText(results)
+                .then(() => {
+                    const copyBtn = document.getElementById('copyBtn');
+                    copyBtn.textContent = 'Copied!';
+                    setTimeout(() => {
+                        copyBtn.textContent = 'Copy to Clipboard';
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+        });
+
+        function formatResponse(text) {
+            return text.replace(/\n/g, '<br>')
+                      .replace(/---.*?---/gs, match => `<div class="response-section">${match}</div>`)
+                      .replace(/^(\d+:\d+)\s*-\s*/gm, '<span class="time-slot">$1</span>')
+                      .replace(/Action Items?:/gi, 
+                          match => `<div class="section-header">${match}</div>`);
+        }
+    </script>
+</body>
+</html>
