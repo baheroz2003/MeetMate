@@ -1,99 +1,129 @@
-# Blog Idea Generator - README
+🧠 Meeting Assistant - README
+📝 Overview
+The Meeting Assistant is a web application designed to help professionals streamline their meeting planning. It uses powerful language models (via Open WebUI or local Ollama) to generate meeting agendas, discussion topics, and action items tailored to your specific context.
 
-## Overview
+🚀 Features
+Generate structured meeting agendas based on your meeting type and goals
 
-The Blog Idea Generator is a web application that helps content creators quickly generate blog post ideas and outlines tailored to their specific niche. It uses language models through either Open WebUI or local Ollama to generate creative, structured content ideas.
+Select number of agenda items (1, 3, 5, or 10)
 
-## Features
+Choose tone (formal, informal, team-building, strategic, etc.)
 
-- Generate customized blog post ideas based on your content niche
-- Choose the number of ideas to generate (1, 3, 5, or 10)
-- Select content tone (professional, casual, humorous, etc.)
-- Include or exclude detailed outlines for each post idea
-- Select from available language models
-- Copy results to clipboard with one click
-- Responsive design for desktop and mobile
+Include or exclude detailed discussion prompts and action items
 
-## Prerequisites
+Choose between Open WebUI and locally installed Ollama models
 
-- Python 3.8+
-- FastAPI and its dependencies
-- Access to Open WebUI (https://chat.ivislabs.in) and/or local Ollama installation
+Copy results to clipboard with a single click
 
-## Installation Steps
+Responsive UI for both desktop and mobile usage
 
-1. **Create Project Structure**
-   - Create the project directory
-   - Create subdirectories for templates and static files
+✅ Prerequisites
+Python 3.8+
 
-2. **Install Dependencies**
-   - Install FastAPI, Uvicorn, Jinja2, HTTPX, and other required packages
+FastAPI and dependencies
 
-3. **Configure API Settings**
-   - Update the API key for Open WebUI if needed
-   - Configure local Ollama settings if using it as a fallback
+Access to Open WebUI (https://chat.ivislabs.in) and/or local Ollama installation
 
-4. **Start the Application**
-   - Run the FastAPI application with Uvicorn
-   - Access the application at http://localhost:8000
+📦 Installation Steps
+Set Up Project Structure
 
-## Using the Application
+Create the project root folder
 
-### Step 1: Set Your Content Parameters
-1. Enter your content niche (e.g., "sustainable gardening", "digital marketing")
-2. Select the number of blog post ideas you want
-3. Choose your preferred content tone
-4. Decide whether to include detailed outlines
-5. Select the language model to use
+Create templates/ and static/ directories for HTML and assets
 
-### Step 2: Generate Ideas
-1. Click the "Generate Ideas" button
-2. Wait for the ideas to be generated
-3. View the results in the designated area
+Install Python Dependencies
 
-### Step 3: Use Your Ideas
-1. Review the generated blog post ideas and outlines
-2. Use the "Copy to Clipboard" button to save the ideas
-3. Incorporate them into your content planning
+bash
+Copy
+Edit
+pip install fastapi uvicorn jinja2 httpx
+Configure LLM API
 
-## How It Works
+Set API key for Open WebUI (if required)
 
-1. **User Inputs Parameters**
-   - The user fills out the form with their content needs
+Ensure Ollama is installed and models are pulled (e.g., gemma:2b, llama3, etc.)
 
-2. **Application Sends Request to LLM**
-   - The application creates a prompt based on user inputs
-   - It attempts to connect to Open WebUI first
-   - Falls back to local Ollama if Open WebUI is unavailable
+Run the Application
 
-3. **LLM Generates Content**
-   - The language model processes the prompt
-   - Returns creative blog post ideas in the requested format
+bash
+Copy
+Edit
+uvicorn main:app --reload
+Visit http://localhost:8000
 
-4. **Results Display**
-   - The application formats the response with proper styling
-   - Displays the content to the user
+🧑‍💻 Using the Application
+Step 1: Enter Meeting Details
+Provide the meeting type (e.g., sprint planning, client update)
 
-## Troubleshooting
+Select how many agenda items you want
 
-### API Connection Issues
-- Verify your API key is correct
-- Check if Open WebUI is accessible from your network
-- Review application logs for specific error messages
+Choose a tone (e.g., formal, casual, strategic)
 
-### No Models Available
-- Verify that the API is working properly
-- Check that you have models installed if using local Ollama
-- The application will use a default list if it can't fetch models
+Optionally include detailed discussion points and follow-ups
 
-### Generation Errors
-- Try a different language model
-- Simplify your request (fewer ideas, no outlines)
-- Check if the prompt is properly formatted
+Select the language model you want to use
 
-## Customization Options
+Step 2: Generate Agenda
+Click "Generate Agenda"
 
-- Modify prompt templates for different types of content generation
-- Adjust the UI styling to match your preferences
-- Configure different LLM providers by updating API endpoints
-- Add additional generation options based on your needs
+Wait for the model to respond with a custom agenda
+
+The results are shown in a user-friendly format
+
+Step 3: Copy and Use
+Use the Copy to Clipboard button to save the output
+
+Share it with your team or paste into calendar invites, documents, etc.
+
+⚙️ How It Works
+User Inputs Parameters
+User fills the meeting configuration form
+
+LLM Request Triggered
+
+App creates a prompt using form data
+
+Sends to Open WebUI API first
+
+Falls back to local Ollama if necessary
+
+Model Responds with Agenda
+
+The model returns structured content
+
+Includes agenda items, optional talking points and actions
+
+App Displays Results
+
+Response is shown on the frontend
+
+Results are cleanly styled and easy to copy
+
+🛠 Troubleshooting
+🌐 API Issues
+Ensure Open WebUI is reachable
+
+Verify API key (if used)
+
+Run Ollama locally: ollama serve
+
+⚠️ No Model Found
+Run ollama list to check local models
+
+Pull one with ollama pull llama3 or similar
+
+❌ Generation Errors
+Use simpler input
+
+Try a different model
+
+Check terminal logs for tracebacks
+
+🎨 Customization
+Modify prompt templates to suit internal/team/company formats
+
+Update styling in static/ and templates/ directories
+
+Add support for other LLM APIs (e.g., OpenAI, Cohere, Mistral)
+
+Expand to include summaries or follow-up email generation
