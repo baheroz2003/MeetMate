@@ -16,13 +16,13 @@ templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Configuration for open-webui API
-WEBUI_ENABLED = False  # Set to use open-webui API
+WEBUI_ENABLED = True # Set to use open-webui API
 WEBUI_BASE_URL = "https://chat.ivislabs.in/api"
 API_KEY = "sk-ce706b683e9d4e4e9032ccad4b3b214e"  # Replace with your actual API key if needed
 DEFAULT_MODEL = "gemma2:2b"  # Update to one of the available models
 
 # Fallback to local Ollama API if needed
-OLLAMA_ENABLED = True  # Set to False to use only the web UI API
+OLLAMA_ENABLED = False  # Set to False to use only the web UI API
 OLLAMA_HOST = "localhost"
 OLLAMA_PORT = "11434"
 OLLAMA_API_URL = f"http://{OLLAMA_HOST}:{OLLAMA_PORT}/api"
