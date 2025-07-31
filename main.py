@@ -16,7 +16,7 @@ templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Configuration for open-webui API
-WEBUI_ENABLED = True  # Set to use open-webui API
+WEBUI_ENABLED = False  # Set to use open-webui API
 WEBUI_BASE_URL = "https://chat.ivislabs.in/api"
 API_KEY = "sk-ce706b683e9d4e4e9032ccad4b3b214e"  # Replace with your actual API key if needed
 DEFAULT_MODEL = "gemma2:2b"  # Update to one of the available models
@@ -110,7 +110,7 @@ async def generate_meeting_content(
                         "prompt": prompt,
                         "stream": False
                     },
-                    timeout=60.0
+                    timeout=300.0
                 )
                 
                 if response.status_code != 200:
@@ -214,7 +214,7 @@ async def get_models():
             except Exception as e:
                 print(f"Error fetching models from Ollama: {str(e)}")
         
-        fallback_models = [DEFAULT_MODEL, "gemma2:2b", "qwen2.5:0.5b", "deepseek-r1:1.5b", "deepseek-coder:latest"]
+        fallback_models = [DEFAULT_MODEL, "gemma3:4b", "qwen2.5:0.5b", "deepseek-r1:1.5b", "deepseek-coder:latest"]
         return {"models": fallback_models}
     except Exception as e:
         print(f"Unexpected error in get_models: {str(e)}")
